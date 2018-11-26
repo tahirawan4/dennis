@@ -46,6 +46,7 @@ class Trial(models.Model):
     event = models.ManyToManyField(Event, null=True, blank=True)
     trial_days = models.IntegerField(default=0)
     subscriptions_count = models.IntegerField(default=0)
+    inner_html = models.TextField(blank=True, default='')
 
     def __unicode__(self):
         return self.full_name
