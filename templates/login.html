@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <form role="form" method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="login-form">
+                    <h2 class="heading">LOGIN</h2>
+                    {% bootstrap_form form %}
+                    {% buttons %}
+                        <button type="submit" class="btn btn-success">Submit <span
+                                class="glyphicon glyphicon-log-in"></span></button>
+                        <input type="hidden" name="next" value="{{ next }}"/>
+                    {% endbuttons %}
+                </div>
+            </form>
+
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+{% endblock %}

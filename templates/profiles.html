@@ -1,0 +1,186 @@
+<div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="home-tab">
+
+    <div class="row">
+        <div class="col-8">
+            <div class="row">
+                {% for sub in subs %}
+                    <div class="col-4">
+                        <button type="button" class="btn btn-secondary"
+                                onclick="populate_search('{{ sub.title }}')">{{ sub.title }}</button>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+        <div class="col-4">
+            <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search"
+                       aria-label="Search" id="search" name="search" value="{% if search %}{{ search }}{% endif %}">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit"
+                        id="search_button">Search
+                    <button class="btn btn-primary my-2 my-sm-0" type="button"
+                            id="search_button" onclick="clear_window()">clear
+                    </button>
+            </form>
+        </div>
+
+    </div>
+
+
+    <br>
+    <div id="row">
+
+
+        <div class="col-sm-12">
+            <table class="table table-striped dataTable no-footer display" id="todo-table" role="grid"
+                   aria-describedby="todo-table_info">
+                <thead>
+                <tr role="row">
+                    <th class="sorting_desc" tabindex="0" aria-controls="todo-table" rowspan="1"
+                        colspan="1" style="width: 0px;"
+                        aria-label="Foto: activate to sort column ascending"
+                        aria-sort="descending">Foto
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="todo-table" rowspan="1"
+                        colspan="1" style="width: 0px;"
+                        aria-label="Naam (leeftijd): activate to sort column ascending">Naam
+                        (leeftijd)
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="todo-table" rowspan="1"
+                        colspan="1" style="width: 0px;"
+                        aria-label="Abonnementen: activate to sort column ascending">
+                        Abonnementen
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="todo-table" rowspan="1"
+                        colspan="1" style="width: 0px;"
+                        aria-label="Logboek 14d: activate to sort column ascending">Logboek 14d
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="todo-table" rowspan="1"
+                        colspan="1" style="width: 0px;"
+                        aria-label="Actie: activate to sort column ascending">Actie
+                    </th>
+                </tr>
+                </thead>
+                <tbody id="membersTableBody">
+
+                {% for user in users %}
+
+                    <tr>
+                        <td><img
+                                src="http://www.studio8apps.com/wp-content/uploads/2014/05/square_instapic_200-200x200.png"
+                                alt="Wirken" class="img-circle"
+                                style="padding:5px; width:75px; heigth:75px;border-radius: 50%;">
+                        </td>
+                        <td><strong>{{ user.user.last_name }}&nbsp;{{ user.user.first_name }}</strong>({{ user.age }})
+                            <br> Tel: {{ user.phone_number }}</td>
+
+                        <td>
+                            {% for sub in user.sub.all %}
+                                {{ sub.title }}
+                                <br>
+                            {% endfor %}
+                            {{ sub.apk }}
+                        </td>
+
+                        <td>
+                            {% for event in user.events.all %}
+                                {% if event.title %}
+                                    {{ event.title }}
+                                    <br>
+                                {% endif %}
+
+                            {% endfor %}
+                        <td>
+                            <button type="button"
+                                    style="color: #000; background-color: transparent; background-image:none; text-shadow:none;margin-bottom: 8px"
+                                    class="btn btn-primary btn-xs modal-button"
+                                    data-toggle="modal"
+                                    data-target="#m-1-{{ user.member_id }}">Registratie
+                            </button>
+                            <!-- Modal -->
+                            <div class="model-1 modal fade" id="m-1-{{ user.member_id }}">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close"
+                                                    data-dismiss="modal"
+                                                    aria-label="Close"><span
+                                                    aria-hidden="true">×</span></button>
+                                            <h4 class="modal-title">Contactregistratie</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                                    <textarea class="form-control" rows="3"
+                                                                              maxlength="140"
+                                                                              id="message-1-{{ user.member_id }}"></textarea>
+                                            </div>
+                                            <div id="message_length"></div>
+                                            <div class="form-group">
+                                                <select class="form-control"
+                                                        id="option-1-{{ user.member_id }}">
+                                                    <option value="Geen gehoor">geen gehoor
+                                                    </option>
+                                                    <option value="Telefonisch gesproken">
+                                                        telefonisch gesproken
+                                                    </option>
+                                                    <option value="Whatsapp chat">Whatsapp
+                                                    </option>
+                                                    <option value="Fysiek gesproken">fysiek
+                                                        gesproken
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default"
+                                                    data-dismiss="modal" id="dismiss-{{ user.member_id }}">Close
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-primary log-btn-1-{{ user.member_id }}"
+                                                    data-member-id="{{ user.member_id }}">Opslaan
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <script type="text/javascript">
+                                $('.log-btn-1-{{ user.member_id }}').on('click', function () {
+                                    var member_id = $(this).attr("data-member-id");
+                                    $("#dismiss-" + member_id).click();
+                                    console.log('{{ user.id }}');
+                                    console.log('{{ user.member_id }}');
+                                    console.log($('#option-1-' + member_id).val());
+                                    console.log($('#message-1-' + member_id).val());
+                                });
+                            </script>
+
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+
+        function clear_window() {
+            var location = window.location.href;
+            var url_parts = location.split('?');
+            var main_url = url_parts[0];
+            window.location = main_url;
+        }
+
+
+        $(document).ready(function () {
+            $('#todo-table').DataTable();
+        });
+
+
+    </script>
+</div>

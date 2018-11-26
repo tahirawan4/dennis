@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+{% load cache i18n %}
+
+{% block title %}{% trans "Profiles Import" %}{% endblock %}
+
+{% block content %}
+<!-- HEADER -->
+<div class="header">
+  <div class="container">
+    <!-- Body -->
+    <div class="header-body">
+      <div class="row align-items-end">
+        <div class="col">
+          <h6 class="header-pretitle">{% trans "Profiles" %}</h6>
+          <h1 class="header-title">{% trans "Import" %}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- / .header -->
+<!-- CARDS -->
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="file" name="csv_file" required/>
+              <input class='btn btn-success' type="submit" value="Upload"/>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

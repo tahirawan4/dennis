@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#profile" role="tab">Profiles
+                            &nbsp;&nbsp;<span
+                                    class="badge badge-pill badge-secondary">{{ users|length }}</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#leads" role="tab">Leads &nbsp;&nbsp;<span
+                                class="badge badge-pill badge-secondary">{{ leads|length }}</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#trial" role="tab">Trials &nbsp;&nbsp;<span
+                                class="badge badge-pill badge-secondary">{{ trials|length }}</span></a>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="myTabContent">
+                    {% include 'profiles.html' with subs=subs users=users %}
+                    {% include 'leads.html' with leads=leads %}
+                    {% include 'trials.html' with trials=trials %}
+                </div>
+
+            </div>
+
+            <div class="col-md-12">
+                <div class="tab-content">
+
+
+                    <div role="tabpanel" class="tab-pane fade" id="activetrials">
+                        <br>
+                        <div id="todo-table-2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-sm-6"></div>
+                                <div class="col-sm-6">
+                                    <div id="todo-table-2_filter" class="dataTables_filter"><label>Search:<input
+                                            type="search" class="form-control input-sm" placeholder=""
+                                            aria-controls="todo-table-2"></label></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-striped dataTable no-footer" id="todo-table-2" role="grid"
+                                           aria-describedby="todo-table-2_info">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting_desc" tabindex="0" aria-controls="todo-table-2"
+                                                rowspan="1" colspan="1" aria-sort="descending"
+                                                aria-label="Foto: activate to sort column ascending"
+                                                style="width: 165px;">Foto
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="todo-table-2" rowspan="1"
+                                                colspan="1"
+                                                aria-label="Naam (leeftijd): activate to sort column ascending"
+                                                style="width: 372px;">Naam (leeftijd)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="todo-table-2" rowspan="1"
+                                                colspan="1" aria-label="Bezoeken: activate to sort column ascending"
+                                                style="width: 269px;">Bezoeken
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="todo-table-2" rowspan="1"
+                                                colspan="1" aria-label="Actie: activate to sort column ascending"
+                                                style="width: 182px;">Actie
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="activetrialsTableBody">
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function populate_search(val) {
+            $('#search').val(val);
+            $('#search_button').click();
+        }
+
+
+    </script>
+
+{% endblock content %}
